@@ -1,0 +1,117 @@
+﻿
+<div ng-view></div>
+@section scripts{
+    <script src="~/AngularController/complainDetailController.js"></script>
+}
+
+
+<div class="box" ng-controller="complainDetailController">
+    <div class="box-header with-border">
+        <h3 class="box-title">Complain Detail</h3>
+        <div class="box-tools pull-right" ng-if="userStatus == '1'">
+            <button class="btn bg-blue" data-toggle="modal" data-target="#complainStatusModal">
+                <i class="fa fa-pencil"></i> Change Complain Status
+            </button>
+        </div>
+    </div>
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-success alert-dismissable save-alert">
+                    <h4><i class="icon fa fa-ban"></i> Success!</h4>
+                    New message successfully created!
+                </div>
+                <div class="post" ng-repeat="item in complainList">
+                    <div class="user-block">
+                        <img class="img-circle img-bordered-sm" src="~/Assets/img/avatar5.png" alt="user image">
+                        <span class="username">
+                            <a href="#">{{ item.Username }}</a>
+                            <a href="#" class="pull-right">
+                                Complain Status : 
+                                <b ng-if="item.ComplainStatusId == '1'"><span class="label bg-orange" >{{ item.ComplainStatusText }}</span></b>
+                                <b ng-if="item.ComplainStatusId == '2'"><span class="label bg-yellow">{{ item.ComplainStatusText }}</span></b>
+                                <b ng-if="item.ComplainStatusId == '3'"><span class="label bg-blue">{{ item.ComplainStatusText }}</span></b>
+                                <b ng-if="item.ComplainStatusId == '4'"><span class="label bg-green">{{ item.ComplainStatusText }}</span></b>
+                            </a>
+                        </span>
+                        <span class="description">
+                            <i ng-if="item.UserStatus == '1'">
+                                <span class="label bg-yellow">Administrator</span>
+                            </i>
+                            <i ng-if="item.UserStatus == '2'">
+                                <span class="label bg-yellow">Client</span>
+                            </i>
+                        </span>
+                    </div><!-- /.user-block -->
+                    <p>
+                        <strong>
+                            <h4>{{item.ComplainSubject}}</h4>
+                        </strong>
+                    </p>
+                    <p>
+                        {{item.ComplainText}}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="post" ng-repeat="item in complainDetailList">
+                    <div class="user-block">
+                        <div ng-if="item.UserStatus == '2'">
+                            <img class="img-circle img-bordered-sm" src="~/Assets/img/avatar5.png" alt="user image">
+                        </div>
+                        <div ng-if="item.UserStatus == '1'">
+                            <img class="img-circle img-bordered-sm" src="~/Assets/img/avatar04.png" alt="user image">
+                        </div>
+                        <span class="username">
+                            <a href="#">{{ item.Username }}</a>
+                        </span>
+                        <span class="description">
+                            <i ng-if="item.UserStatus == '1'">
+                                <span class="label bg-green">Administrator</span>
+                            </i>
+                            <i ng-if="item.UserStatus == '2'">
+                                <span class="label bg-yellow">Client</span>
+                            </i>
+                        </span>
+                    </div><!-- /.user-block -->
+                    <p>
+                        {{item.ComplainDetailText}}
+                    </p>
+                </div>
+                <input class="form-control input-sm" type="text" placeholder="Type a message" ng-model="complainDetail.complainDetailText" ng-keypress="postReply($event)">
+            </div>
+        </div>
+
+    </div><!-- /.box-body -->
+    <div class="box-footer">
+
+    </div><!-- /.box-footer-->
+</div><!-- /.box -->
+
+<div id="complainStatusModal" class="modal fade" role="dialog" ng-controller="complainDetailController">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title">Change Complain Status</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="complainSubject">Complain Subject</label>
+                    <select class="form-control" ng-model="complainRecord.complainStatusId">
+                        <option value="">- Select Complain Status -</option>
+                        <option ng-repeat="item in complainStatusList" value="{{item.ComplainStatusId}}">{{item.ComplainStatusText}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" ng-click="changeComplainStatus()">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>

@@ -1,0 +1,109 @@
+﻿<div ng-view></div>
+@section scripts{
+    <script src="~/AngularController/complainController.js"></script>
+
+}
+
+
+<div class="box" ng-controller="complainController">
+    <div class="box-header with-border">
+        <h3 class="box-title">Complain List</h3>
+        <div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                <i class="fa fa-minus"></i>
+            </button>
+            <button class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                <i class="fa fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div class="box-body">
+        <div class="row">
+            <div class="logs-table col-xs-12">
+                <div class="alert alert-warning alert-dismissable delete-alert">
+                    <h4><i class="icon fa fa-ban"></i> Warning!</h4>
+                    Data has been deleted!
+                </div>
+                <div class="alert alert-success alert-dismissable save-alert">
+                    <h4><i class="icon fa fa-ban"></i> Success!</h4>
+                    Data sucessfully saved! Please refresh page there is a bug.
+                </div>
+                <div ng-if="userStatus == 2">
+                    <button type="button" class="btn bg-blue" data-toggle="modal" data-target="#complainModal">
+                        <i class="fa fa-plus-circle"></i> New Complain
+                    </button>
+                </div>
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Complain Number</th>
+                            <th>Subject</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in complainList">
+                            <td>{{ item.ComplainId }}</td>
+                            <td>{{ item.ComplainSubject }}</td>
+                            <td>
+                                <div ng-if="item.ComplainStatusId == '1'">
+                                    <span class="label bg-orange">{{ item.ComplainStatusText }}</span>
+                                </div>
+                                <div ng-if="item.ComplainStatusId == '2'">
+                                    <span class="label bg-yellow">{{ item.ComplainStatusText }}</span>
+                                </div>
+                                <div ng-if="item.ComplainStatusId == '3'">
+                                    <span class="label bg-blue">{{ item.ComplainStatusText }}</span>
+                                </div>
+                                <div ng-if="item.ComplainStatusId == '4'">
+                                    <span class="label bg-green">{{ item.ComplainStatusText }}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <a ng-click="goToDetail(item.ComplainId)" class="btn bg-green">
+                                    <i class="fa fa-search"></i> View Detail
+                                </a>
+                                <button class="btn bg-red" title="Delete" ng-click="delete(item)">
+                                    <i class="fa fa-remove"></i> Delete
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot></tfoot>
+                </table>
+            </div>
+        </div>
+
+    </div><!-- /.box-body -->
+    <div class="box-footer">
+
+    </div><!-- /.box-footer-->
+</div><!-- /.box -->
+
+<div id="complainModal" class="modal fade" role="dialog" ng-controller="complainController">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+                <h4 class="modal-title">Modal Default</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="complainSubject">Complain Subject</label>
+                    <input type="text" class="form-control" id="complainSubject" placeholder="Enter subject" ng-model="complain.complainSubject">
+                </div>
+                <div class="form-group">
+                    <label for="complainText">Complain Text</label>
+                    <input type="text" class="form-control" id="complainText" placeholder="Enter text" ng-model="complain.complainText">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" ng-click="save()">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
