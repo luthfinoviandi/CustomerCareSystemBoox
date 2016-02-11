@@ -38,14 +38,20 @@
                             <li class="dropdown user user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <img src="~/Assets/img/avatar5.png" class="user-image" alt="User Image">
-                                    @HttpContext.Current.Session["Username"].ToString()
+                                    @if (HttpContext.Current.Session["Username"] != null)
+                                    {
+                                        @HttpContext.Current.Session["Username"].ToString();
+                                    }
                                 </a>
                                 <ul class="dropdown-menu">
                                     <!-- User image -->
                                     <li class="user-header">
                                         <img src="~/Assets/img/avatar5.png" class="user-image" alt="User Image">
                                         <p>
-                                            @HttpContext.Current.Session["Username"].ToString()
+                                            @if (HttpContext.Current.Session["Username"] != null)
+                                            {
+                                                @HttpContext.Current.Session["Username"].ToString();
+                                            }
                                         </p>
                                     </li>
                                     <!-- Menu Footer-->
@@ -70,7 +76,7 @@
                     <ul class="sidebar-menu">
                         <li class="header">MAIN NAVIGATION</li>
                         <li class="treeview">
-                            <a href="#" onclick="window.location='/Complain/Index'">
+                            <a href="#" onclick="window.location = '/Complain/Index'">
                                 <i class="fa fa-table"></i> <span>Complain</span>
                             </a>
                         </li>
